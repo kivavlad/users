@@ -1,5 +1,5 @@
 import type { LoginCredentials } from "./types";
-import { UserData, TOKEN_KEY } from './constants';
+import { UserData } from '@shared/constants/auth';
 
 class LoginService {
   async loginRequest({ login, password }: LoginCredentials) {

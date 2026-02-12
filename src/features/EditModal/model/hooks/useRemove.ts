@@ -1,14 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { ApiTags } from "@shared/constants/tags";
-import { FormValues } from "@features/CreateModal/lib/schema";
-import { createUserService } from '..';
+import { editUserService } from "..";
 
-export const useCreate = () => {
+export const useRemove = () => {
   const client = useQueryClient();
 
   return useMutation({
-    mutationFn: (values: FormValues) => 
-      createUserService.createUser(values),
+    mutationFn: (id: string) => 
+      editUserService.removeUser(id),
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ApiTags.users })
     }

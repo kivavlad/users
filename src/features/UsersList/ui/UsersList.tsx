@@ -12,7 +12,7 @@ export const UsersList: React.FC = () => {
 
   const handleCreate = useCallback(() => {
     openModal('createUser');
-  }, []);
+  }, [openModal]);
 
   if (isError) {
     return (
@@ -34,8 +34,8 @@ export const UsersList: React.FC = () => {
           pagination={{
             pageSize: 6
           }}
-          renderItem={(item, index) => (
-            <UserItem item={item} index={index} />
+          renderItem={(item) => (
+            <UserItem item={item} />
           )}
           footer={
             <Button type="primary" onClick={handleCreate}>

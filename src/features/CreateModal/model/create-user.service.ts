@@ -1,6 +1,6 @@
 import api from "@shared/api/api";
 import type { IUser } from "@shared/types/user.types";
-import { FormValues } from "../lib/values";
+import { FormValues } from "../lib/schema";
 
 class CreateUserService {
   async createUser(values: FormValues) {

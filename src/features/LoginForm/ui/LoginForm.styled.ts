@@ -12,14 +12,8 @@ export const WrapperStyled = styled.div`
   gap: 20px;
 `;
 
-export const FormStyled = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-`;
-
 export const buttonStyled = css`
   max-width: 80px;
   width: 100%;
-  margin-left: auto;
+  float: right;
 `;

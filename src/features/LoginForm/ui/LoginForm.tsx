@@ -1,36 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Input, Typography, Button, Card, notification } from 'antd';
+import { Form, Input, Typography, Button, Card, notification } from 'antd';
 import { RoutePath } from "@shared/constants/urls";
 import { useLogin } from "../model";
-import { LoginFormStyled, WrapperStyled, FormStyled, buttonStyled } from './LoginForm.styled';
+import { rules } from "../lib/rules";
+import { FormValues } from "../lib/values";
+import { LoginFormStyled, WrapperStyled, buttonStyled } from './LoginForm.styled';
 
 export const LoginForm: React.FC = () => {
   const navigate = useNavigate();
-  const [loginValue, setLoginValue] = useState("");
-  const [passValue, setPassValue] = useState("");
-
+  const [form] = Form.useForm<FormValues>();
   const { mutate: onLogin, isLoading, isError, isSuccess, error } = useLogin();
 
-  const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setLoginValue(value);
-  };
-
-  const handlePassChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
-    setPassValue(value);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!loginValue.trim() || !passValue.trim()) return;
-
-    onLogin({ 
-      login: loginValue.trim(), 
-      password: passValue.trim()
-    });
+  const handleSubmit = async () => {
+    try {
+      const { login, password } = await form.validateFields();
+      onLogin({
+        login: login.trim(),
+        password: password.trim()
+      });
+      form.resetFields();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
@@ -55,29 +47,34 @@ export const LoginForm: React.FC = () => {
       <Card>
         <WrapperStyled>
           <Typography>Авторизация</Typography>
-          <FormStyled onSubmit={handleSubmit}>
-            <Input 
-              placeholder="Логин"
-              value={loginValue}
-              onChange={handleLoginChange}
-              status={isError ? 'error' : void 0}
-            />
-            <Input.Password
-              placeholder="Пароль" 
-              value={passValue}
-              onChange={handlePassChange}
-              status={isError ? 'error' : void 0}
-            />
+          <Form
+            form={form}
+            layout="vertical"
+            autoComplete="off"
+            disabled={isLoading}
+          >
+            <Form.Item
+              name="login"
+              rules={rules}
+            >
+              <Input placeholder="Логин" />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              rules={rules}
+            >
+              <Input.Password placeholder="Пароль" />
+            </Form.Item>
             <Button 
               type="primary"
-              htmlType="submit"
               disabled={isLoading}
               className={buttonStyled}
               loading={isLoading}
+              onClick={handleSubmit}
             >
               Войти
             </Button>
-          </FormStyled>
+          </Form>
         </WrapperStyled>
       </Card>
     </LoginFormStyled>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useLocalStorage } from '@shared/hooks/useLocalStorage';
 import { RoutePath } from '@shared/constants/urls';
-import { TOKEN_KEY } from '@features/LoginForm/model/constants';
+import { TOKEN_KEY } from '@shared/constants/auth';
 import { Loader } from '@shared/ui/Loader';
 
 interface IProps {
