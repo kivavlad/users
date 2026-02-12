@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Card, List, Button } from "antd";
 import { UserItem } from "@entities/UserItem";
 import { ErrorComponent } from "@shared/ui/ErrorComponent";
+import { useModals } from "@shared/hooks/useModals";
 import { useGetUsers } from "../model";
 import { UserListStyled } from './UsersList.styled';
 
 export const UsersList: React.FC = () => {
+  const { openModal } = useModals();
   const { data = [], isLoading, isFetching, isError, error } = useGetUsers();
+
+  const handleCreate = useCallback(() => {
+    openModal('createUser');
+  }, []);
 
   if (isError) {
     return (
@@ -32,7 +38,7 @@ export const UsersList: React.FC = () => {
             <UserItem item={item} index={index} />
           )}
           footer={
-            <Button type="primary">
+            <Button type="primary" onClick={handleCreate}>
               Создать пользователя
             </Button>
           }

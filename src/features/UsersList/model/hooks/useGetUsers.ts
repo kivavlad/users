@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
+import { ApiTags } from "@shared/constants/tags";
 import { userService } from "../users.service";
-import { UserTags } from '../constants';
 
 export const useGetUsers = () => {
   return useQuery({
-    queryKey: UserTags,
+    queryKey: ApiTags.users,
     queryFn: userService.getUsers,
     select: (data) => data.data
   });
