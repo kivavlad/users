@@ -35,6 +35,7 @@ export default (
         '@features': resolve(__dirname, 'src/features'),
         '@pages': resolve(__dirname, 'src/pages'),
         '@shared': resolve(__dirname, 'src/shared'),
+        '@widgets': resolve(__dirname, 'src/widgets'),
       },
     },
     module: {

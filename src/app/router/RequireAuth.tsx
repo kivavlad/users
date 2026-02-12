@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useLocalStorage } from '@shared/hooks/useLocalStorage';
 import { RoutePath } from '@shared/constants/urls';
 import { TOKEN_KEY } from '@features/LoginForm/model/constants';
+import { Loader } from '@shared/ui/Loader';
 
 interface IProps {
   children?: React.ReactNode;
@@ -36,7 +37,7 @@ export const RequireAuth: React.FC = ({ children }: IProps) => {
   }, [location.pathname, navigate]);
 
   if (isLoading) {
-    return <div>Проверка авторизации...</div>;
+    return <Loader />;
   }
 
   return <>{children}</>;
