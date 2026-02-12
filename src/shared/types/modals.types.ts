@@ -30,7 +30,7 @@ export type ModalState = {
 export interface IModalsContext {
   isOpen: (name: ModalName) => boolean;
   openModal: <K extends ModalName>(
-    name: K, 
+    name: K,
     props?: Omit<ModalPropsMap[K], keyof IBaseModalProps>
   ) => void;
   closeModal: (name: ModalName) => void;

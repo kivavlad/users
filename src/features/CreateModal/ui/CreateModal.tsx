@@ -1,9 +1,12 @@
-import React, { useCallback, useEffect } from "react";
-import { Modal, Form, Input, notification } from "antd";
-import { nameRules, avatarRules } from "@shared/constants/validate";
+import React, { useCallback, useEffect } from 'react';
+
+import { Modal, Form, Input, notification } from 'antd';
+
+import { requiredField, requiredUrl } from '@shared/constants/validate';
 import type { ICreateModalProps } from '@shared/types/modals.types';
-import { useCreate } from "../model/hooks/useCreate";
-import { FormValues } from "../lib/schema";
+
+import type { FormValues } from '../lib/schema';
+import { useCreate } from '../model/hooks/useCreate';
 
 export const CreateModal: React.FC<ICreateModalProps> = ({ open, onClose }) => {
   const [form] = Form.useForm<FormValues>();
@@ -14,7 +17,7 @@ export const CreateModal: React.FC<ICreateModalProps> = ({ open, onClose }) => {
       const { name, avatar } = await form.validateFields();
       onCreate({
         name: name.trim(),
-        avatar: avatar.trim()
+        avatar: avatar.trim(),
       });
     } catch (error) {
       console.error(error);
@@ -24,13 +27,13 @@ export const CreateModal: React.FC<ICreateModalProps> = ({ open, onClose }) => {
   useEffect(() => {
     if (isSuccess) {
       notification.success({
-        message: 'Новый пользователь успешно создан',
+        message: 'Новый пользователь создан',
         placement: 'bottomRight',
       });
       form.resetFields();
       onClose();
     }
-    
+
     if (isError) {
       notification.error({
         message: 'Ошибка создания пользователя',
@@ -40,8 +43,8 @@ export const CreateModal: React.FC<ICreateModalProps> = ({ open, onClose }) => {
   }, [isSuccess, isError, form, onClose]);
 
   return (
-    <Modal 
-      open={open} 
+    <Modal
+      open={open}
       onCancel={onClose}
       onOk={handleCreate}
       okText="Создать"
@@ -51,25 +54,12 @@ export const CreateModal: React.FC<ICreateModalProps> = ({ open, onClose }) => {
       okButtonProps={{ disabled: isLoading, loading: isLoading }}
       cancelButtonProps={{ disabled: isLoading }}
     >
-      <Form
-        form={form}
-        layout="vertical"
-        autoComplete="off"
-        disabled={isLoading}
-      >
-        <Form.Item
-          label="Имя"
-          name="name"
-          rules={nameRules}
-        >
+      <Form form={form} layout="vertical" autoComplete="off" disabled={isLoading}>
+        <Form.Item label="Имя" name="name" rules={requiredField}>
           <Input />
         </Form.Item>
 
-        <Form.Item
-          label="Ссылка на аватарку"
-          name="avatar"
-          rules={avatarRules}
-        >
+        <Form.Item label="Ссылка на аватарку" name="avatar" rules={requiredUrl}>
           <Input />
         </Form.Item>
       </Form>

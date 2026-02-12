@@ -1,8 +1,9 @@
-import type { LoginCredentials } from "./types";
 import { UserData } from '@shared/constants/auth';
 
+import type { FormValues } from '../lib/schema';
+
 class LoginService {
-  async loginRequest({ login, password }: LoginCredentials) {
+  async loginRequest({ login, password }: FormValues) {
     return new Promise<string>((resolve, reject) => {
       setTimeout(() => {
         if (login === UserData.LOGIN && password === UserData.PASSWORD) {
@@ -14,6 +15,6 @@ class LoginService {
       }, 2000);
     });
   }
-};
+}
 
 export const loginService = new LoginService();

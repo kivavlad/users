@@ -1,7 +1,10 @@
 import React, { useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import { Button, Result } from 'antd';
+import { useNavigate } from 'react-router-dom';
+
 import { RoutePath } from '@shared/constants/urls';
+
 import { NotFoundStyled } from './NotFound.styled';
 
 export const NotFoundPage: React.FC = () => {

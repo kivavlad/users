@@ -1,38 +1,39 @@
 import React, { useCallback, useEffect } from 'react';
+
 import { Modal, Form, Input, notification, Button } from 'antd';
-import type { IUser } from '@shared/types/user.types';
+
+import { requiredField, requiredUrl } from '@shared/constants/validate';
 import type { IEditModalProps } from '@shared/types/modals.types';
-import { nameRules, avatarRules } from '@shared/constants/validate';
-import { useGetById } from '../model';
-import { useEdit } from '../model';
-import { useRemove } from '../model';
-import { FormValues } from '../lib/schema';
+
+import type { FormValues } from '../lib/schema';
+import { useGetById, useEdit, useRemove } from '../model';
+
 import { FooterStyled, DeleteButton } from './EditModal.styled';
 
 export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
   const [form] = Form.useForm<FormValues>();
-  
-  const { 
-    data: user, 
-    isLoading: isLoadingUser, 
+
+  const {
+    data: user,
+    isLoading: isLoadingUser,
     isError: isErrorUser,
-    error: userError
+    error: userError,
   } = useGetById(id!);
-  
-  const { 
-    mutate: onEdit, 
+
+  const {
+    mutate: onEdit,
     isLoading: isEditing,
     isSuccess: isEditSuccess,
     isError: isEditError,
-    error: editError
+    error: editError,
   } = useEdit();
-  
-  const { 
-    mutate: onRemove, 
+
+  const {
+    mutate: onRemove,
     isLoading: isDeleting,
     isSuccess: isDeleteSuccess,
     isError: isDeleteError,
-    error: deleteError
+    error: deleteError,
   } = useRemove();
 
   const isAnyLoading = isLoadingUser || isEditing || isDeleting;
@@ -41,12 +42,11 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
     if (!user) return void 0;
     try {
       const { name, avatar } = await form.validateFields();
-      const updatedUser: IUser = {
+      onEdit({
         ...user,
         name: name.trim(),
         avatar: avatar.trim(),
-      }
-      onEdit(updatedUser);
+      });
     } catch (err) {
       console.error(err);
     }
@@ -94,10 +94,10 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
 
   useEffect(() => {
     const error = userError || editError || deleteError;
-    
+
     if (error) {
       let message = 'Ошибка';
-      
+
       if (isErrorUser) {
         message = 'Не удалось загрузить данные пользователя';
       } else if (isEditError) {
@@ -105,7 +105,7 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
       } else if (isDeleteError) {
         message = 'Не удалось удалить пользователя';
       }
-      
+
       notification.error({
         message,
         placement: 'bottomRight',
@@ -114,7 +114,7 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
   }, [userError, editError, deleteError, isErrorUser, isEditError, isDeleteError]);
 
   return (
-    <Modal 
+    <Modal
       open={open}
       onCancel={handleCancel}
       title="Редактирование пользователя"
@@ -123,55 +123,26 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
       loading={isLoadingUser}
       footer={() => (
         <FooterStyled>
-          <DeleteButton 
-            danger
-            onClick={handleRemove}
-            loading={isDeleting}
-            disabled={isAnyLoading}
-          >
+          <DeleteButton danger onClick={handleRemove} loading={isDeleting} disabled={isAnyLoading}>
             Удалить
           </DeleteButton>
-          <Button
-            onClick={handleCancel}
-            disabled={isEditing || isDeleting}
-          >
+          <Button onClick={handleCancel} disabled={isEditing || isDeleting}>
             Отмена
           </Button>
-          <Button
-            type="primary"
-            onClick={handleUpdate}
-            loading={isEditing}
-            disabled={isAnyLoading}
-          >
+          <Button type="primary" onClick={handleUpdate} loading={isEditing} disabled={isAnyLoading}>
             Сохранить
           </Button>
         </FooterStyled>
       )}
     >
-      <Form
-        form={form}
-        layout="vertical"
-        autoComplete="off"
-        disabled={isAnyLoading}
-      >
-        <Form.Item
-          label="id"
-          name="id"
-        >
+      <Form form={form} layout="vertical" autoComplete="off" disabled={isAnyLoading}>
+        <Form.Item label="id" name="id">
           <Input disabled />
         </Form.Item>
-        <Form.Item
-          label="Имя"
-          name="name"
-          rules={nameRules}
-        >
+        <Form.Item label="Имя" name="name" rules={requiredField}>
           <Input />
         </Form.Item>
-        <Form.Item
-          label="Ссылка на аватарку"
-          name="avatar"
-          rules={avatarRules}
-        >
+        <Form.Item label="Ссылка на аватарку" name="avatar" rules={requiredUrl}>
           <Input />
         </Form.Item>
       </Form>
