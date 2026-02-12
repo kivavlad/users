@@ -8,9 +8,6 @@ class UserService {
   async getUserById(id: string) {
     return await api.get<IUser>(`/users/${id}`);
   }
-  async createUser() {
-    return await api.post<IUser>('/users');
-  }
   async updateUser(id: string) {
     return await api.put<IUser>(`/users/${id}`);
   }
