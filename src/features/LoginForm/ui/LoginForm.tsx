@@ -10,7 +10,7 @@ export const LoginForm: React.FC = () => {
   const [loginValue, setLoginValue] = useState("");
   const [passValue, setPassValue] = useState("");
 
-  const { mutate: onLogin, isLoading, isError, isSuccess,  error } = useLogin();
+  const { mutate: onLogin, isLoading, isError, isSuccess, error } = useLogin();
 
   const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;

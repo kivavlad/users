@@ -14,10 +14,6 @@ class LoginService {
       }, 2000);
     });
   }
-
-  logout() {
-    localStorage.removeItem(TOKEN_KEY);
-  }
 };
 
 export const loginService = new LoginService();

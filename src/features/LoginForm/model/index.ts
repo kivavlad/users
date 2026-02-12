@@ -1,1 +1,2 @@
-export * from './hooks/useLogin';
+export { useLogin } from './hooks/useLogin';
+export { loginService } from './login.service';
