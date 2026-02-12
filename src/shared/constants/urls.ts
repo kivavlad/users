@@ -1,7 +1,7 @@
 export enum AppRoutes {
   ROOT = 'ROOT',
   NOT_FOUND = 'NOT_FOUND',
-  LOGIN = 'LOGIN'
+  LOGIN = 'LOGIN',
 }
 
 export const RoutePath: Record<AppRoutes, string> = {

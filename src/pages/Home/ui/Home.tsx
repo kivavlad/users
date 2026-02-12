@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import { HomeStyled } from './Home.styled';
 
 export const HomePage: React.FC = () => (
