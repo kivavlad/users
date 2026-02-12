@@ -1,5 +1,5 @@
-import { css } from "@emotion/css";
-import styled from "@emotion/styled";
+import { css } from '@emotion/css';
+import styled from '@emotion/styled';
 
 export const LoginFormStyled = styled.div`
   max-width: 500px;

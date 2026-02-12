@@ -1,9 +1,13 @@
-import React, { useCallback } from "react";
-import { List, Avatar } from "antd";
-import type { IUser } from "@shared/types/user.types";
-import { useModals } from "@shared/hooks/useModals";
-import { formatDate } from "../lib/formatDate";
-import { AvatarStyled, NameStyled } from "./UserItem.styled";
+import React, { useCallback } from 'react';
+
+import { List, Avatar } from 'antd';
+
+import { useModals } from '@shared/hooks/useModals';
+import type { IUser } from '@shared/types/user.types';
+
+import { formatDate } from '../lib/formatDate';
+
+import { AvatarStyled, NameStyled } from './UserItem.styled';
 
 interface IProps {
   item: IUser;
@@ -24,10 +28,7 @@ export const UserItem: React.FC<IProps> = ({ item }) => {
             <Avatar src={item.avatar} />
           </AvatarStyled>
         }
-        title={
-          <NameStyled onClick={handleClick}>
-            {item.name}
-          </NameStyled>}
+        title={<NameStyled onClick={handleClick}>{item.name}</NameStyled>}
         description={`Зарегистрирован ${formatDate(item.createdAt)}`}
       />
     </List.Item>

@@ -1,21 +1,21 @@
-export const nameRules = [
+export const requiredField = [
   {
     required: true,
-    message: 'Обязательное поле'
+    message: 'Обязательное поле',
   },
   {
     pattern: /\S/,
-    message: 'Поле не может состоять из пробелов'
-  }
+    message: 'Поле не может состоять из пробелов',
+  },
 ];
 
-export const avatarRules = [
+export const requiredUrl = [
   {
     required: true,
-    message: 'Обязательное поле'
+    message: 'Обязательное поле',
   },
   {
     pattern: /^(https?:\/\/)[^\s$.?#].[^\s]*$/i,
-    message: 'Введите корректный URL'
-  }
+    message: 'Введите корректный URL',
+  },
 ];

@@ -1,15 +1,16 @@
 import { useMutation } from '@tanstack/react-query';
-import { useLocalStorage } from '@shared/hooks/useLocalStorage';
-import { loginService } from '../login.service';
-import { LoginCredentials } from '../types';
+
 import { TOKEN_KEY } from '@shared/constants/auth';
+import { useLocalStorage } from '@shared/hooks/useLocalStorage';
+
+import { FormValues } from '../../lib/schema';
+import { loginService } from '../login.service';
 
 export const useLogin = () => {
   const { set } = useLocalStorage();
 
   return useMutation({
-    mutationFn: ({ login, password }: LoginCredentials) => 
-      loginService.loginRequest({ login, password }),
+    mutationFn: (values: FormValues) => loginService.loginRequest(values),
     onSuccess: (token: string) => {
       set(TOKEN_KEY, token);
     },

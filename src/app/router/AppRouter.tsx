@@ -1,7 +1,10 @@
 import React from 'react';
-import { Route, Routes, RouteProps } from 'react-router-dom';
+
 import { Layout } from 'antd';
+import { Route, Routes, RouteProps } from 'react-router-dom';
+
 import { routeConfig } from '@shared/config/AppConfig/AppConfig';
+
 import { RequireAuth } from './RequireAuth';
 
 export const AppRouter: React.FC = () => {
@@ -17,9 +20,7 @@ export const AppRouter: React.FC = () => {
 
   return (
     <Layout>
-      <Routes>
-        {Object.values(routeConfig).map(renderRoute)}
-      </Routes>
+      <Routes>{Object.values(routeConfig).map(renderRoute)}</Routes>
     </Layout>
   );
 };

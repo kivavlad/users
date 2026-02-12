@@ -1,17 +1,19 @@
-export const useLocalStorage = () => {
-  const get = (key: string) => {
-    return localStorage.getItem(key);
-  };
+import { useCallback } from 'react';
 
-  const set = (key: string, value: string) => {
+export const useLocalStorage = () => {
+  const get = useCallback((key: string) => {
+    return localStorage.getItem(key);
+  }, []);
+
+  const set = useCallback((key: string, value: string) => {
     localStorage.setItem(key, value);
     window.dispatchEvent(new Event('storage'));
-  };
+  }, []);
 
-  const remove = (key: string) => {
+  const remove = useCallback((key: string) => {
     localStorage.removeItem(key);
     window.dispatchEvent(new Event('storage'));
-  };
+  }, []);
 
   return { get, set, remove };
 };

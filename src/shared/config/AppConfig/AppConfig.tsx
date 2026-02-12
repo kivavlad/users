@@ -1,9 +1,9 @@
 import { RouteProps } from 'react-router-dom';
-import { AppRoutes, RoutePath } from '@shared/constants/urls';
 
-import { LoginPage } from '@pages/Login';
 import { HomePage } from '@pages/Home';
+import { LoginPage } from '@pages/Login';
 import { NotFoundPage } from '@pages/NotFound';
+import { AppRoutes, RoutePath } from '@shared/constants/urls';
 
 export const routeConfig: Record<AppRoutes, RouteProps> = {
   [AppRoutes.ROOT]: {

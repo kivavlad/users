@@ -1,5 +1,7 @@
 import React from 'react';
+
 import { Global } from '@emotion/react';
+
 import { resetStyled } from '@app/styled/reset.styled';
 
 interface IProps {
