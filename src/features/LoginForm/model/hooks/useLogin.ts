@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useLocalStorage } from '@shared/hooks/useLocalStorage';
 import { loginService } from '../login.service';
 import { LoginCredentials } from '../types';
-import { TOKEN_KEY } from '../constants';
+import { TOKEN_KEY } from '@shared/constants/auth';
 
 export const useLogin = () => {
   const { set } = useLocalStorage();

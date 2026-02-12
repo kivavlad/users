@@ -1,17 +1,25 @@
 import React, { useCallback, useEffect } from "react";
 import { Modal, Form, Input, notification } from "antd";
-import { useModals } from "@shared/hooks/useModals";
+import { nameRules, avatarRules } from "@shared/constants/validate";
+import type { ICreateModalProps } from '@shared/types/modals.types';
 import { useCreate } from "../model/hooks/useCreate";
-import { nameRules, avatarRules } from "../lib/rules";
-import { FormValues } from "../lib/values";
-import { InputStyled } from './CreateModal.styled';
+import { FormValues } from "../lib/schema";
 
-export const CreateModal: React.FC = () => {
-  const { isOpen, closeModal } = useModals();
-  const open = isOpen('createUser');
-
+export const CreateModal: React.FC<ICreateModalProps> = ({ open, onClose }) => {
   const [form] = Form.useForm<FormValues>();
   const { mutate: onCreate, isLoading, isSuccess, isError } = useCreate();
+
+  const handleCreate = useCallback(async () => {
+    try {
+      const { name, avatar } = await form.validateFields();
+      onCreate({
+        name: name.trim(),
+        avatar: avatar.trim()
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }, [form, onCreate]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -19,7 +27,8 @@ export const CreateModal: React.FC = () => {
         message: 'Новый пользователь успешно создан',
         placement: 'bottomRight',
       });
-      closeModal('createUser');
+      form.resetFields();
+      onClose();
     }
     
     if (isError) {
@@ -28,31 +37,17 @@ export const CreateModal: React.FC = () => {
         placement: 'bottomRight',
       });
     }
-  }, [isSuccess, isError, closeModal]);
-
-  const handleClose = useCallback(() => {
-    closeModal('createUser');
-  }, [isLoading, closeModal]);
-
-  const handleCreate = useCallback(async () => {
-    try {
-      const values = await form.validateFields();
-      onCreate(values);
-      form.resetFields();
-    } catch (error) {
-      console.error(error);
-    }
-  }, [form, onCreate]);
+  }, [isSuccess, isError, form, onClose]);
 
   return (
     <Modal 
       open={open} 
-      onCancel={handleClose}
+      onCancel={onClose}
       onOk={handleCreate}
       okText="Создать"
       cancelText="Отмена"
       title="Создание пользователя"
-      confirmLoading={isLoading}
+      keyboard={!isLoading}
       okButtonProps={{ disabled: isLoading, loading: isLoading }}
       cancelButtonProps={{ disabled: isLoading }}
     >
@@ -62,25 +57,21 @@ export const CreateModal: React.FC = () => {
         autoComplete="off"
         disabled={isLoading}
       >
-        <InputStyled>
-          <Form.Item
-            label="Имя"
-            name="name"
-            rules={nameRules}
-          >
-            <Input />
-          </Form.Item>
-        </InputStyled>
+        <Form.Item
+          label="Имя"
+          name="name"
+          rules={nameRules}
+        >
+          <Input />
+        </Form.Item>
 
-        <InputStyled>
-          <Form.Item
-            label="Ссылка на аватарку"
-            name="avatar"
-            rules={avatarRules}
-          >
-            <Input />
-          </Form.Item>
-        </InputStyled>
+        <Form.Item
+          label="Ссылка на аватарку"
+          name="avatar"
+          rules={avatarRules}
+        >
+          <Input />
+        </Form.Item>
       </Form>
     </Modal>
   );

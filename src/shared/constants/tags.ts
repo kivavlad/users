@@ -1,3 +1,3 @@
-export const ApiTags = {
+export const ApiTags: Record<string, Array<string>> = {
   users: ['users']
 };
