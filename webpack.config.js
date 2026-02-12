@@ -1,7 +1,11 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+import { resolve, dirname } from 'path';
+import { fileURLToPath } from 'url';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 
-module.exports = (
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+export default (
   env = { NODE_ENV: process.env.NODE_ENV || 'development' }
 ) => {
   const isProduction = env.NODE_ENV === 'production';
@@ -11,7 +15,7 @@ module.exports = (
     mode,
     entry: './src/index.tsx',
     output: {
-      path: path.resolve(__dirname, 'dist'),
+      path: resolve(__dirname, 'dist'),
       filename: '[name].[contenthash].js',
       clean: true,
       publicPath: 'auto',
@@ -26,11 +30,11 @@ module.exports = (
     resolve: {
       extensions: ['.tsx', '.ts', '.js', '.jsx', '.json'],
       alias: {
-        '@app': path.resolve(__dirname, 'src/app'),
-        '@entities': path.resolve(__dirname, 'src/entities'),
-        '@features': path.resolve(__dirname, 'src/features'),
-        '@pages': path.resolve(__dirname, 'src/pages'),
-        '@shared': path.resolve(__dirname, 'src/shared'),
+        '@app': resolve(__dirname, 'src/app'),
+        '@entities': resolve(__dirname, 'src/entities'),
+        '@features': resolve(__dirname, 'src/features'),
+        '@pages': resolve(__dirname, 'src/pages'),
+        '@shared': resolve(__dirname, 'src/shared'),
       },
     },
     module: {
