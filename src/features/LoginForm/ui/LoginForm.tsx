@@ -29,13 +29,17 @@ export const LoginForm: React.FC = () => {
   }, [onLogin, form]);
 
   useEffect(() => {
-    if (isError) {
+    if (isError && error instanceof Error) {
       notification.error({
-        message: error instanceof Error ? error.message : 'Ошибка авторизации',
+        message: error.message,
         placement: 'bottomRight',
       });
+      form.setFields([
+        { name: 'login', errors: [''] },
+        { name: 'password', errors: [error.message] },
+      ]);
     }
-  }, [isError, error]);
+  }, [isError, error, form]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -51,10 +55,10 @@ export const LoginForm: React.FC = () => {
           <Typography>Авторизация</Typography>
           <Form form={form} layout="vertical" autoComplete="off" disabled={isLoading}>
             <Form.Item name="login" rules={requiredField}>
-              <Input placeholder="Логин" status={error ? 'error' : void 0} />
+              <Input placeholder="Логин" />
             </Form.Item>
             <Form.Item name="password" rules={requiredField}>
-              <Input.Password placeholder="Пароль" status={error ? 'error' : void 0} />
+              <Input.Password placeholder="Пароль" />
             </Form.Item>
             <Button
               type="primary"

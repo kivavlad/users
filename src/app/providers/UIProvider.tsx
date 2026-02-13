@@ -2,7 +2,8 @@ import React from 'react';
 
 import { Global } from '@emotion/react';
 
-import { resetStyled } from '@app/styled/reset.styled';
+import { normalizeStyled } from '@shared/styles/normalize.styled';
+import { resetStyled } from '@shared/styles/reset.styled';
 
 interface IProps {
   children: React.ReactNode;
@@ -10,7 +11,7 @@ interface IProps {
 
 export const UIProvider = ({ children }: IProps) => (
   <>
-    <Global styles={resetStyled} />
+    <Global styles={[resetStyled, normalizeStyled]} />
     {children}
   </>
 );
