@@ -9,7 +9,7 @@ export const useEdit = () => {
   const client = useQueryClient();
 
   return useMutation({
-    mutationFn: (values: IUser) => editUserService.editUser(values),
+    mutationFn: (user: IUser) => editUserService.editUser(user),
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ApiTags.users });
     },

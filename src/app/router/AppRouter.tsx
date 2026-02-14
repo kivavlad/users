@@ -5,6 +5,7 @@ import { Route, Routes, RouteObject } from 'react-router-dom';
 import { routeConfig } from '@app/router/config';
 
 import { RequireAuth } from './RequireAuth';
+
 export const AppRouter: React.FC = () => {
   const createRoute = (route: RouteObject) => {
     if (route.children) {
