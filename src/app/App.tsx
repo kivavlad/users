@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter } from 'react-router-dom';
 
 import { ModalsProvider } from './providers/ModalsProvider';
 import { UIProvider } from './providers/UIProvider';
@@ -10,7 +10,7 @@ import { AppRouter } from './router';
 const client = new QueryClient();
 
 export const App: React.FC = () => (
-  <BrowserRouter>
+  <HashRouter>
     <QueryClientProvider client={client}>
       <UIProvider>
         <ModalsProvider>
@@ -18,5 +18,5 @@ export const App: React.FC = () => (
         </ModalsProvider>
       </UIProvider>
     </QueryClientProvider>
-  </BrowserRouter>
+  </HashRouter>
 );
