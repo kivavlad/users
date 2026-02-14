@@ -58,19 +58,19 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
   }, [onRemove, id]);
 
   const handleCancel = useCallback(() => {
-    if (isAnyLoading) return void 0;
+    if (isEditing || isDeleting) return void 0;
     onClose();
-  }, [onClose, isAnyLoading]);
+  }, [onClose, isEditing, isDeleting]);
 
   useEffect(() => {
     if (user && open) {
       form.setFieldsValue({
-        id,
+        id: user.id,
         name: user.name,
         avatar: user.avatar,
       });
     }
-  }, [user, id, form, open]);
+  }, [user, form, open]);
 
   useEffect(() => {
     if (isEditSuccess) {
@@ -118,8 +118,6 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
       open={open}
       onCancel={handleCancel}
       title="Редактирование пользователя"
-      closable={!isAnyLoading}
-      keyboard={!isAnyLoading}
       loading={isLoadingUser}
       footer={() => (
         <FooterStyled>

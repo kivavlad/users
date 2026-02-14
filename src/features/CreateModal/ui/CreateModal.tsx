@@ -33,14 +33,16 @@ export const CreateModal: React.FC<ICreateModalProps> = ({ open, onClose }) => {
       form.resetFields();
       onClose();
     }
+  }, [isSuccess, form, onClose]);
 
+  useEffect(() => {
     if (isError) {
       notification.error({
         message: 'Ошибка создания пользователя',
         placement: 'bottomRight',
       });
     }
-  }, [isSuccess, isError, form, onClose]);
+  }, [isError]);
 
   return (
     <Modal
@@ -50,7 +52,6 @@ export const CreateModal: React.FC<ICreateModalProps> = ({ open, onClose }) => {
       okText="Создать"
       cancelText="Отмена"
       title="Создание пользователя"
-      keyboard={!isLoading}
       okButtonProps={{ disabled: isLoading, loading: isLoading }}
       cancelButtonProps={{ disabled: isLoading }}
     >
@@ -58,7 +59,6 @@ export const CreateModal: React.FC<ICreateModalProps> = ({ open, onClose }) => {
         <Form.Item label="Имя" name="name" rules={requiredField}>
           <Input />
         </Form.Item>
-
         <Form.Item label="Ссылка на аватарку" name="avatar" rules={requiredUrl}>
           <Input />
         </Form.Item>

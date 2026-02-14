@@ -19,6 +19,6 @@
   `admin`  // Login
   `admin`  // Password
 
-* URL для аватарок
+### URL для аватарок
 
   `https://api.dicebear.com/7.x/miniavs/svg?seed=1`  // Можно менять номер в конце
