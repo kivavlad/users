@@ -1,11 +1,11 @@
-import { RouteObject } from 'react-router-dom';
-
 import { HomePage } from '@pages/Home';
 import { LoginPage } from '@pages/Login';
 import { NotFoundPage } from '@pages/NotFound';
 import { AppRoutes, RoutePath } from '@shared/constants/urls';
 
 import { Layout } from '../../layouts/Layout';
+
+import type { RouteObject } from 'react-router-dom';
 
 export const routeConfig: Record<AppRoutes, RouteObject> = {
   [AppRoutes.ROOT]: {

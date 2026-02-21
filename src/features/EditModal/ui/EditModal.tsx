@@ -1,14 +1,15 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Modal, Form, Input, notification, Button } from 'antd';
 
 import { requiredField, requiredUrl } from '@shared/constants/validate';
-import type { IEditModalProps } from '@shared/types/modals.types';
 
-import type { FormValues } from '../lib/schema';
 import { useGetById, useEdit, useRemove } from '../model';
 
 import { FooterStyled, DeleteButton } from './EditModal.styled';
+
+import type { FormValues } from '../lib/schema';
+import type { IEditModalProps } from '@shared/types/modals.types';
 
 export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
   const [form] = Form.useForm<FormValues>();
@@ -38,7 +39,7 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
 
   const isAnyLoading = isLoadingUser || isEditing || isDeleting;
 
-  const handleUpdate = useCallback(async () => {
+  const handleEdit = async () => {
     if (!user) return void 0;
     try {
       const { name, avatar } = await form.validateFields();
@@ -50,17 +51,17 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
     } catch (err) {
       console.error(err);
     }
-  }, [user, form, onEdit]);
+  };
 
-  const handleRemove = useCallback(() => {
+  const handleRemove = () => {
     if (!id) return void 0;
     onRemove(id);
-  }, [onRemove, id]);
+  };
 
-  const handleCancel = useCallback(() => {
+  const handleCancel = () => {
     if (isEditing || isDeleting) return void 0;
     onClose();
-  }, [onClose, isEditing, isDeleting]);
+  };
 
   useEffect(() => {
     if (user && open) {
@@ -93,7 +94,7 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
   }, [isDeleteSuccess, onClose]);
 
   useEffect(() => {
-    const error = userError || editError || deleteError;
+    const error = userError ?? editError ?? deleteError;
 
     if (error) {
       let message = 'Ошибка';
@@ -127,7 +128,7 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
           <Button onClick={handleCancel} disabled={isEditing || isDeleting}>
             Отмена
           </Button>
-          <Button type="primary" onClick={handleUpdate} loading={isEditing} disabled={isAnyLoading}>
+          <Button type="primary" onClick={handleEdit} loading={isEditing} disabled={isAnyLoading}>
             Сохранить
           </Button>
         </FooterStyled>

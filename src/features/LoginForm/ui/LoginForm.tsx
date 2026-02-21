@@ -1,32 +1,28 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 
-import { Form, Input, Typography, Button, Card, notification } from 'antd';
+import { Form, Input, Typography, Card, notification } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 import { RoutePath } from '@shared/constants/urls';
 import { requiredField } from '@shared/constants/validate';
 
-import { FormValues } from '../lib/schema';
 import { useLogin } from '../model';
 
-import { LoginFormStyled, WrapperStyled, buttonStyled } from './LoginForm.styled';
+import { LoginFormStyled, WrapperStyled, SubmitButton } from './LoginForm.styled';
+
+import type { FormValues } from '../lib/schema';
 
 export const LoginForm: React.FC = () => {
   const navigate = useNavigate();
   const [form] = Form.useForm<FormValues>();
   const { mutate: onLogin, isLoading, isError, isSuccess, error } = useLogin();
 
-  const handleSubmit = useCallback(async () => {
-    try {
-      const { login, password } = await form.validateFields();
-      onLogin({
-        login: login.trim(),
-        password: password.trim(),
-      });
-    } catch (error) {
-      console.error(error);
-    }
-  }, [onLogin, form]);
+  const onFinish = async (values: FormValues) => {
+    onLogin({
+      login: values.login.trim(),
+      password: values.password.trim(),
+    });
+  };
 
   useEffect(() => {
     if (isError && error instanceof Error) {
@@ -53,23 +49,22 @@ export const LoginForm: React.FC = () => {
       <Card>
         <WrapperStyled>
           <Typography>Авторизация</Typography>
-          <Form form={form} layout="vertical" autoComplete="off" disabled={isLoading}>
+          <Form
+            form={form}
+            layout="vertical"
+            autoComplete="off"
+            disabled={isLoading}
+            onFinish={onFinish}
+          >
             <Form.Item name="login" rules={requiredField}>
               <Input placeholder="Логин" />
             </Form.Item>
             <Form.Item name="password" rules={requiredField}>
               <Input.Password placeholder="Пароль" />
             </Form.Item>
-            <Button
-              type="primary"
-              htmlType="submit"
-              disabled={isLoading}
-              className={buttonStyled}
-              loading={isLoading}
-              onClick={handleSubmit}
-            >
+            <SubmitButton type="primary" htmlType="submit" disabled={isLoading} loading={isLoading}>
               Войти
-            </Button>
+            </SubmitButton>
           </Form>
         </WrapperStyled>
       </Card>

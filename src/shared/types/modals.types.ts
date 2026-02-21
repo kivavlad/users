@@ -1,3 +1,5 @@
+import type { ComponentType } from 'react';
+
 export interface IBaseModalProps {
   open: boolean;
   onClose: () => void;
@@ -17,7 +19,7 @@ export type ModalPropsMap = {
 export type ModalName = keyof ModalPropsMap;
 
 export type ModalsMap = {
-  [K in ModalName]: React.ComponentType<ModalPropsMap[K]>;
+  [K in ModalName]: ComponentType<ModalPropsMap[K]>;
 };
 
 export type ModalState = {

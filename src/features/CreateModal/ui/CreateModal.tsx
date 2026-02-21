@@ -1,18 +1,19 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Modal, Form, Input, notification } from 'antd';
 
 import { requiredField, requiredUrl } from '@shared/constants/validate';
-import type { ICreateModalProps } from '@shared/types/modals.types';
+
+import { useCreate } from '../model/hooks/useCreate';
 
 import type { FormValues } from '../lib/schema';
-import { useCreate } from '../model/hooks/useCreate';
+import type { ICreateModalProps } from '@shared/types/modals.types';
 
 export const CreateModal: React.FC<ICreateModalProps> = ({ open, onClose }) => {
   const [form] = Form.useForm<FormValues>();
   const { mutate: onCreate, isLoading, isSuccess, isError } = useCreate();
 
-  const handleCreate = useCallback(async () => {
+  const handleCreate = async () => {
     try {
       const { name, avatar } = await form.validateFields();
       onCreate({
@@ -22,7 +23,7 @@ export const CreateModal: React.FC<ICreateModalProps> = ({ open, onClose }) => {
     } catch (error) {
       console.error(error);
     }
-  }, [form, onCreate]);
+  };
 
   useEffect(() => {
     if (isSuccess) {

@@ -1,5 +1,5 @@
-import { css } from '@emotion/css';
 import styled from '@emotion/styled';
+import { Button } from 'antd';
 
 export const LoginFormStyled = styled.div`
   max-width: 500px;
@@ -12,7 +12,7 @@ export const WrapperStyled = styled.div`
   gap: 20px;
 `;
 
-export const buttonStyled = css`
+export const SubmitButton = styled(Button)`
   max-width: 80px;
   width: 100%;
   float: right;

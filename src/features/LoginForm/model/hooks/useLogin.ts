@@ -3,8 +3,9 @@ import { useMutation } from '@tanstack/react-query';
 import { TOKEN_KEY } from '@shared/constants/auth';
 import { useLocalStorage } from '@shared/hooks/useLocalStorage';
 
-import { FormValues } from '../../lib/schema';
 import { loginService } from '../login.service';
+
+import type { FormValues } from '../../lib/schema';
 
 export const useLogin = () => {
   const { set } = useLocalStorage();

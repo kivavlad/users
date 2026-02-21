@@ -8,10 +8,10 @@ import { useLocalStorage } from '@shared/hooks/useLocalStorage';
 import { Loader } from '@shared/ui/Loader';
 
 interface IProps {
-  children?: React.ReactNode;
+  children: React.ReactNode;
 }
 
-export const RequireAuth: React.FC = ({ children }: IProps) => {
+export const RequireAuth: React.FC<IProps> = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
   const { get } = useLocalStorage();

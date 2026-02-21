@@ -4,10 +4,9 @@ import { ApiTags } from '@shared/constants/tags';
 
 import { userService } from '../users.service';
 
-export const useGetUsers = () => {
-  return useQuery({
+export const useGetUsers = () =>
+  useQuery({
     queryKey: ApiTags.users,
     queryFn: () => userService.getUsers(),
     select: (data) => data.data,
   });
-};

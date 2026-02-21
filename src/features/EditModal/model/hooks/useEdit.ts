@@ -1,9 +1,10 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { ApiTags } from '@shared/constants/tags';
-import type { IUser } from '@shared/types/user.types';
 
 import { editUserService } from '..';
+
+import type { IUser } from '@shared/types/user.types';
 
 export const useEdit = () => {
   const client = useQueryClient();

@@ -1,4 +1,5 @@
 import api from '@shared/api/api';
+
 import type { IUser } from '@shared/types/user.types';
 
 class EditUserService {

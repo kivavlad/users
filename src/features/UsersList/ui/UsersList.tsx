@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { Card, List, Button, notification } from 'antd';
 
@@ -14,9 +14,9 @@ export const UsersList: React.FC = () => {
   const { openModal } = useModals();
   const loading = isLoading || isFetching;
 
-  const handleCreate = useCallback(() => {
+  const handleCreate = () => {
     openModal('createUser');
-  }, [openModal]);
+  };
 
   useEffect(() => {
     if (isError) {
