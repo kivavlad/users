@@ -4,6 +4,7 @@ import { CreateModal } from '@features/CreateModal';
 import { EditModal } from '@features/EditModal';
 import { useModals } from '@shared/hooks/useModals';
 import { ModalsProvider as SharedModalsProvider } from '@shared/lib/modals';
+
 import type { ModalsMap } from '@shared/types/modals.types';
 
 export const modals: ModalsMap = {

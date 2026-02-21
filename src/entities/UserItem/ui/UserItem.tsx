@@ -1,13 +1,14 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import { List, Avatar } from 'antd';
 
 import { useModals } from '@shared/hooks/useModals';
-import type { IUser } from '@shared/types/user.types';
 
 import { formatDate } from '../lib/formatDate';
 
 import { AvatarStyled, NameStyled } from './UserItem.styled';
+
+import type { IUser } from '@shared/types/user.types';
 
 interface IProps {
   item: IUser;
@@ -16,9 +17,9 @@ interface IProps {
 export const UserItem: React.FC<IProps> = ({ item }) => {
   const { openModal } = useModals();
 
-  const handleClick = useCallback(() => {
+  const handleClick = () => {
     openModal('editUser', { id: item.id });
-  }, [openModal, item.id]);
+  };
 
   return (
     <List.Item>

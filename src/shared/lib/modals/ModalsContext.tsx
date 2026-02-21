@@ -13,31 +13,35 @@ export const ModalsProvider: React.FC<IProps> = ({ children }) => {
   const [modalState, setModalState] = useState<ModalState>({});
 
   const registerModals = useCallback((newModals: Partial<ModalsMap>) => {
-    setModals((prev) => ({
-      ...prev,
-      ...newModals,
-    }));
+    setModals((prev) => {
+      return {
+        ...prev,
+        ...newModals,
+      };
+    });
   }, []);
 
   const isOpen = useCallback(
-    (name: keyof ModalsMap) => {
-      return Boolean(modalState[name]?.isOpen);
-    },
+    (name: keyof ModalsMap) => Boolean(modalState[name]?.isOpen),
     [modalState]
   );
 
   const openModal = useCallback(<T extends keyof ModalsMap>(name: T, props?: unknown) => {
-    setModalState((prev) => ({
-      ...prev,
-      [name]: { isOpen: true, props },
-    }));
+    setModalState((prev) => {
+      return {
+        ...prev,
+        [name]: { isOpen: true, props },
+      };
+    });
   }, []);
 
   const closeModal = useCallback((name: keyof ModalsMap) => {
-    setModalState((prev) => ({
-      ...prev,
-      [name]: { isOpen: false, props: undefined },
-    }));
+    setModalState((prev) => {
+      return {
+        ...prev,
+        [name]: { isOpen: false, props: undefined },
+      };
+    });
   }, []);
 
   const closeAll = useCallback(() => {

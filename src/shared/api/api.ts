@@ -8,11 +8,9 @@ const api = axios.create({
 });
 
 api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   (error) => {
-    const errorMessage = error.response?.data?.message || error.message;
+    const errorMessage = error.response?.data?.message ?? error.message;
     return Promise.reject(new Error(errorMessage));
   }
 );

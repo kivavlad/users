@@ -1,10 +1,12 @@
 import React from 'react';
 
-import { Route, Routes, RouteObject } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 
 import { routeConfig } from '@app/router/config';
 
 import { RequireAuth } from './RequireAuth';
+
+import type { RouteObject } from 'react-router-dom';
 
 export const AppRouter: React.FC = () => {
   const createRoute = (route: RouteObject) => {

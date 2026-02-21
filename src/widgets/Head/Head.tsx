@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import { Layout, Button } from 'antd';
 
@@ -10,9 +10,9 @@ import { HeadStyled } from './Head.styled';
 export const Head: React.FC = () => {
   const { remove } = useLocalStorage();
 
-  const handleLogout = useCallback(() => {
+  const handleLogout = () => {
     remove(TOKEN_KEY);
-  }, [remove]);
+  };
 
   return (
     <Layout.Header>
