@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { Modal, Form, Input, notification } from 'antd';
+import { Modal, Form, Input } from 'antd';
 
 import { requiredField, requiredUrl } from '@shared/constants/validate';
 
@@ -11,7 +11,7 @@ import type { ICreateModalProps } from '@shared/types/modals.types';
 
 export const CreateModal: React.FC<ICreateModalProps> = ({ open, onClose }) => {
   const [form] = Form.useForm<FormValues>();
-  const { mutate: onCreate, isLoading, isSuccess, isError } = useCreate();
+  const { mutate: onCreate, isLoading } = useCreate();
 
   const handleCreate = async () => {
     try {
@@ -24,26 +24,6 @@ export const CreateModal: React.FC<ICreateModalProps> = ({ open, onClose }) => {
       console.error(error);
     }
   };
-
-  useEffect(() => {
-    if (isSuccess) {
-      notification.success({
-        message: 'Новый пользователь создан',
-        placement: 'bottomRight',
-      });
-      form.resetFields();
-      onClose();
-    }
-  }, [isSuccess, form, onClose]);
-
-  useEffect(() => {
-    if (isError) {
-      notification.error({
-        message: 'Ошибка создания пользователя',
-        placement: 'bottomRight',
-      });
-    }
-  }, [isError]);
 
   return (
     <Modal

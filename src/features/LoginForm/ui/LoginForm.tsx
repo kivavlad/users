@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 
-import { Form, Input, Typography, Card, notification } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { Form, Input, Typography, Card } from 'antd';
 
-import { RoutePath } from '@shared/constants/urls';
 import { requiredField } from '@shared/constants/validate';
 
 import { useLogin } from '../model';
@@ -13,36 +11,24 @@ import { LoginFormStyled, WrapperStyled, SubmitButton } from './LoginForm.styled
 import type { FormValues } from '../lib/schema';
 
 export const LoginForm: React.FC = () => {
-  const navigate = useNavigate();
   const [form] = Form.useForm<FormValues>();
-  const { mutate: onLogin, isLoading, isError, isSuccess, error } = useLogin();
+  const { mutate: onLogin, isLoading, error } = useLogin();
 
-  const onFinish = async (values: FormValues) => {
+  const onFinish = ({ login, password }: FormValues) => {
     onLogin({
-      login: values.login.trim(),
-      password: values.password.trim(),
+      login: login.trim(),
+      password: password.trim(),
     });
   };
 
   useEffect(() => {
-    if (isError && error instanceof Error) {
-      notification.error({
-        message: error.message,
-        placement: 'bottomRight',
-      });
+    if (error && error instanceof Error) {
       form.setFields([
         { name: 'login', errors: [''] },
         { name: 'password', errors: [error.message] },
       ]);
     }
-  }, [isError, error, form]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      form.resetFields();
-      void navigate(RoutePath.ROOT, { replace: true });
-    }
-  }, [isSuccess, form, navigate]);
+  }, [error, form]);
 
   return (
     <LoginFormStyled>

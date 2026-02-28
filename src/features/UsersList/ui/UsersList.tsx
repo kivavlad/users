@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import { Card, List, Button, notification } from 'antd';
+import { Card, List, Button } from 'antd';
 
 import { UserItem } from '@entities/UserItem';
 import { useModals } from '@shared/hooks/useModals';
@@ -10,22 +10,13 @@ import { useGetUsers } from '../model';
 import { UserListStyled } from './UsersList.styled';
 
 export const UsersList: React.FC = () => {
-  const { data = [], isLoading, isFetching, isError } = useGetUsers();
+  const { data = [], isLoading, isFetching } = useGetUsers();
   const { openModal } = useModals();
   const loading = isLoading || isFetching;
 
   const handleCreate = () => {
     openModal('createUser');
   };
-
-  useEffect(() => {
-    if (isError) {
-      notification.error({
-        message: 'Не удалось получить пользователей',
-        placement: 'bottomRight',
-      });
-    }
-  }, [isError]);
 
   return (
     <UserListStyled>
