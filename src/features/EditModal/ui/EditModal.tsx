@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 
-import { Modal, Form, Input, notification, Button } from 'antd';
+import { Modal, Form, Input, Button } from 'antd';
 
 import { requiredField, requiredUrl } from '@shared/constants/validate';
 
@@ -14,30 +14,16 @@ import type { IEditModalProps } from '@shared/types/modals.types';
 export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
   const [form] = Form.useForm<FormValues>();
 
-  const {
-    data: user,
-    isLoading: isLoadingUser,
-    isError: isErrorUser,
-    error: userError,
-  } = useGetById(id!);
-
-  const {
-    mutate: onEdit,
-    isLoading: isEditing,
-    isSuccess: isEditSuccess,
-    isError: isEditError,
-    error: editError,
-  } = useEdit();
-
-  const {
-    mutate: onRemove,
-    isLoading: isDeleting,
-    isSuccess: isDeleteSuccess,
-    isError: isDeleteError,
-    error: deleteError,
-  } = useRemove();
+  const { data: user, isLoading: isLoadingUser } = useGetById(id!);
+  const { mutate: onEdit, isLoading: isEditing } = useEdit();
+  const { mutate: onRemove, isLoading: isDeleting } = useRemove();
 
   const isAnyLoading = isLoadingUser || isEditing || isDeleting;
+
+  const handleCancel = () => {
+    if (isEditing || isDeleting) return void 0;
+    onClose();
+  };
 
   const handleEdit = async () => {
     if (!user) return void 0;
@@ -58,11 +44,6 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
     onRemove(id);
   };
 
-  const handleCancel = () => {
-    if (isEditing || isDeleting) return void 0;
-    onClose();
-  };
-
   useEffect(() => {
     if (user && open) {
       form.setFieldsValue({
@@ -72,47 +53,6 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
       });
     }
   }, [user, form, open]);
-
-  useEffect(() => {
-    if (isEditSuccess) {
-      notification.success({
-        message: 'Пользователь обновлен',
-        placement: 'bottomRight',
-      });
-      onClose();
-    }
-  }, [isEditSuccess, onClose]);
-
-  useEffect(() => {
-    if (isDeleteSuccess) {
-      notification.success({
-        message: 'Пользователь удален',
-        placement: 'bottomRight',
-      });
-      onClose();
-    }
-  }, [isDeleteSuccess, onClose]);
-
-  useEffect(() => {
-    const error = userError ?? editError ?? deleteError;
-
-    if (error) {
-      let message = 'Ошибка';
-
-      if (isErrorUser) {
-        message = 'Не удалось загрузить данные пользователя';
-      } else if (isEditError) {
-        message = 'Не удалось обновить пользователя';
-      } else if (isDeleteError) {
-        message = 'Не удалось удалить пользователя';
-      }
-
-      notification.error({
-        message,
-        placement: 'bottomRight',
-      });
-    }
-  }, [userError, editError, deleteError, isErrorUser, isEditError, isDeleteError]);
 
   return (
     <Modal
@@ -134,7 +74,13 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
         </FooterStyled>
       )}
     >
-      <Form form={form} layout="vertical" autoComplete="off" disabled={isAnyLoading}>
+      <Form
+        form={form}
+        layout="vertical"
+        autoComplete="off"
+        disabled={isAnyLoading}
+        onFinish={handleEdit}
+      >
         <Form.Item label="id" name="id">
           <Input disabled />
         </Form.Item>

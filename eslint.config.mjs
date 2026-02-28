@@ -74,7 +74,6 @@ export default [
       'react/jsx-no-bind': 'off',
       'react/function-component-definition': 'off',
       '@typescript-eslint/explicit-module-boundary-types': 'off',
-      'import/no-cycle': 'off',
       'no-param-reassign': 'off',
       'no-return-await': 'off',
       'require-await': 'off',
@@ -87,6 +86,7 @@ export default [
       'react/jsx-fragments': 'off',
       'react/jsx-no-useless-fragment': 'off',
 
+      'complexity': ['error', 11],
       '@typescript-eslint/no-unused-vars': ['warn', {
         vars: 'all',
         varsIgnorePattern: '^_| ^I[A-Z]|^T[A-Z]|^[A-Z][A-Z_]*$|^ReactComponent$|^src$',
@@ -96,7 +96,6 @@ export default [
         ignoreRestSiblings: true
       }],
       'unused-imports/no-unused-imports': 'warn',
-
       'no-console': ['warn', { allow: ['warn', 'error', 'info'] }],
       'no-debugger': 'warn',
       'no-alert': 'warn',
@@ -164,6 +163,7 @@ export default [
           caseInsensitive: true,
         },
       }],
+      'import/no-cycle': 'error',
       'import/no-duplicates': 'error',
       'import/no-useless-path-segments': ['error', { noUselessIndex: true }],
       'import/no-self-import': 'error',
