@@ -20,9 +20,8 @@ export const useEdit = () => {
       alert.success('Пользователь обновлен');
       closeModal('editUser');
     },
-    onError: (err) => {
+    onError: () => {
       alert.error('Не удалось обновить пользователя');
-      console.error(err);
     },
   });
 };

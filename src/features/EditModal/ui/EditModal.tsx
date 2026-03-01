@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { Modal, Form, Input, Button } from 'antd';
 
 import { requiredField, requiredUrl } from '@shared/constants/validate';
+import { isError } from '@shared/lib/utils/isError';
 
 import { useGetById, useEdit, useRemove } from '../model';
 
@@ -35,7 +36,7 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
         avatar: avatar.trim(),
       });
     } catch (err) {
-      console.error(err);
+      isError(err) && console.error(err?.message);
     }
   };
 

@@ -20,9 +20,8 @@ export const useCreate = () => {
       alert.success('Новый пользователь создан');
       closeModal('createUser');
     },
-    onError: (err) => {
+    onError: () => {
       alert.error('Ошибка создания пользователя');
-      console.error(err);
     },
   });
 };

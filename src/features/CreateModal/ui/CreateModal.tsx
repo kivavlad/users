@@ -3,6 +3,7 @@ import React from 'react';
 import { Modal, Form, Input } from 'antd';
 
 import { requiredField, requiredUrl } from '@shared/constants/validate';
+import { isError } from '@shared/lib/utils/isError';
 
 import { useCreate } from '../model/hooks/useCreate';
 
@@ -20,8 +21,8 @@ export const CreateModal: React.FC<ICreateModalProps> = ({ open, onClose }) => {
         name: name.trim(),
         avatar: avatar.trim(),
       });
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      isError(err) && console.error(err?.message);
     }
   };
 
