@@ -5,6 +5,7 @@ import { TOKEN_KEY } from '@shared/constants/auth';
 import { RoutePath } from '@shared/constants/urls';
 import useAlert from '@shared/hooks/useAlert';
 import { useLocalStorage } from '@shared/hooks/useLocalStorage';
+import { isError } from '@shared/lib/utils/isError';
 
 import { loginService } from '../login.service';
 
@@ -21,8 +22,8 @@ export const useLogin = () => {
       set(TOKEN_KEY, token);
       navigate(RoutePath.ROOT, { replace: true });
     },
-    onError: (err: Error) => {
-      alert.error(err.message);
+    onError: (err) => {
+      isError(err) && alert.error(err.message);
     },
   });
 };

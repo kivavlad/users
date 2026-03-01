@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { ApiTags } from '@shared/constants/tags';
 import useAlert from '@shared/hooks/useAlert';
+import { isError } from '@shared/lib/utils/isError';
 
 import { userService } from '../users.service';
 
@@ -14,7 +15,7 @@ export const useGetUsers = () => {
     select: (data) => data.data,
     onError(err) {
       alert.error('Не удалось получить пользователей');
-      console.error(err);
+      isError(err) && console.error(err.message);
     },
   });
 };

@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ApiTags } from '@shared/constants/tags';
 import useAlert from '@shared/hooks/useAlert';
 import { useModals } from '@shared/hooks/useModals';
+import { isError } from '@shared/lib/utils/isError';
 
 import { editUserService } from '..';
 
@@ -20,7 +21,7 @@ export const useRemove = () => {
     },
     onError: (err) => {
       alert.error('Не удалось удалить пользователя');
-      console.error(err);
+      isError(err) && console.error(err?.message);
     },
   });
 };
