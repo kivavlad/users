@@ -75,13 +75,7 @@ export const EditModal: React.FC<IEditModalProps> = ({ id, open, onClose }) => {
         </FooterStyled>
       )}
     >
-      <Form
-        form={form}
-        layout="vertical"
-        autoComplete="off"
-        disabled={isAnyLoading}
-        onFinish={handleEdit}
-      >
+      <Form form={form} layout="vertical" autoComplete="off" disabled={isAnyLoading}>
         <Form.Item label="id" name="id">
           <Input disabled />
         </Form.Item>
